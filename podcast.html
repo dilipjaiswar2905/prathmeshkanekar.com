@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Title Podcast</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+<div id="navTrigger" style="position:fixed;top:0;left:0;right:0;height:24px;z-index:1001;"></div>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="Logo.png.png" alt="Beyond Title" class="nav-logo-img">
+      <span class="nav-logo-text">BEYOND TITLE</span>
+    </a>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+      <li><a href="podcast.html" class="active"><i class="fas fa-microphone"></i> BEYOND TITLE</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero-section" id="heroSection">
+  <img src="Banner.png.png" alt="Beyond Title Podcast Banner" class="hero-banner-img">
+</div>
+<div class="below-hero-name"></div>
+
+<main class="coming-soon-section">
+  <p class="coming-soon-label">EPISODE LAUNCH</p>
+  <h2 class="coming-soon-title">PODCAST<br><span>COMING SOON</span></h2>
+  <p class="coming-soon-desc">We are curating insightful, deeply human conversations with professionals who have remarkable stories to tell. The first episode is on its way.</p>
+  <div class="coming-soon-box">
+    <i class="fas fa-microphone-alt mic-icon-large"></i>
+    <p>Every great career holds a story beyond the title. We are preparing conversations that go deeper — exploring the pivotal decisions, quiet struggles, and defining moments that shape extraordinary professionals.</p>
+  </div>
+  <button class="notify-btn" id="openModal"><i class="fas fa-bell"></i> GET NOTIFIED</button>
+  <div class="video-section">
+    <p class="video-section-label">WATCH THE TRAILER</p>
+    <div class="video-wrapper">
+      <div class="video-placeholder">
+        <i class="fas fa-play-circle"></i>
+        <p>VIDEO COMING SOON</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section class="full-section dark">
+  <div class="full-section-inner">
+    <h2 class="section-heading reveal">ABOUT BEYOND TITLE</h2>
+    <hr class="gold-line reveal">
+    <p class="reveal" style="font-size:clamp(1.05rem,1.5vw,1.28rem);color:rgba(248,245,239,0.82);line-height:2;margin-bottom:16px;">Beyond Title is a podcast dedicated to meaningful conversations with professionals from diverse fields including coaches, doctors, educators, journalists, corporate leaders, and public servants.</p>
+    <p class="reveal" style="font-size:clamp(1.05rem,1.5vw,1.28rem);color:rgba(248,245,239,0.82);line-height:2;">The goal is simple: to explore the person beyond the profession. Every individual carries a journey filled with experiences, challenges, lessons, and growth.</p>
+  </div>
+</section>
+
+<section class="what-discover">
+  <div class="what-discover-inner">
+    <h2 class="section-heading reveal" style="color:var(--gold);text-align:center;">WHAT YOU WILL DISCOVER</h2>
+    <hr class="gold-line reveal" style="margin:16px auto 8px;">
+    <div class="discover-grid">
+      <div class="discover-card reveal"><i class="fas fa-road"></i><h4>CAREER JOURNEYS</h4><p>Real paths taken by professionals and the pivots that defined their careers.</p></div>
+      <div class="discover-card reveal"><i class="fas fa-heart"></i><h4>LIFE LESSONS</h4><p>Personal insights and wisdom gained through experience that no textbook can teach.</p></div>
+      <div class="discover-card reveal"><i class="fas fa-brain"></i><h4>LEADERSHIP AND MINDSET</h4><p>How leaders think, decide, and grow through uncertainty and responsibility.</p></div>
+      <div class="discover-card reveal"><i class="fas fa-mountain"></i><h4>CHALLENGES AND TURNING POINTS</h4><p>Honest conversations about failures, resilience, and moments that changed everything.</p></div>
+      <div class="discover-card reveal"><i class="fas fa-star"></i><h4>ADVICE FOR NEXT GENERATION</h4><p>Practical guidance from experienced professionals for students and early-career individuals.</p></div>
+      <div class="discover-card reveal"><i class="fas fa-globe"></i><h4>DIVERSE PERSPECTIVES</h4><p>Conversations across industries and backgrounds broadening every listener's worldview.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="guests-section">
+  <div class="guests-inner">
+    <h2 class="section-heading reveal" style="text-align:center;">FEATURED GUESTS</h2>
+    <hr class="gold-line reveal" style="margin:16px auto 8px;">
+    <p class="reveal" style="text-align:center;color:#555;font-size:1.1rem;margin-bottom:8px;">Beyond Title features conversations with professionals from every walk of life.</p>
+    <div class="guests-grid">
+      <div class="guest-chip reveal"><i class="fas fa-dumbbell"></i> Coaches</div>
+      <div class="guest-chip reveal"><i class="fas fa-user-md"></i> Doctors</div>
+      <div class="guest-chip reveal"><i class="fas fa-newspaper"></i> Journalists</div>
+      <div class="guest-chip reveal"><i class="fas fa-briefcase"></i> Corporate Leaders</div>
+      <div class="guest-chip reveal"><i class="fas fa-chalkboard-teacher"></i> Educators</div>
+      <div class="guest-chip reveal"><i class="fas fa-landmark"></i> Public Servants</div>
+    </div>
+  </div>
+</section>
+
+<section class="be-guest-section">
+  <div class="be-guest-inner">
+    <i class="fas fa-microphone" style="font-size:2rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+    <h2 class="section-heading" style="color:var(--gold);text-align:center;">BE A GUEST</h2>
+    <p>If you have a meaningful story or valuable experience to share, you are welcome to be part of Beyond Title. Every story matters.</p>
+    <div class="guest-btn-row">
+      <a href="mailto:prathmesh@prathmeshkanekar.com?subject=Beyond Title - Guest Request" class="btn-gold"><i class="fas fa-paper-plane"></i> APPLY TO BE A GUEST</a>
+      <a href="https://www.linkedin.com/company/beyondtitlewithprathmesh/" target="_blank" class="btn-outline"><i class="fab fa-linkedin"></i> CONNECT ON LINKEDIN</a>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="notifyModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeModal">&times;</button>
+    <div id="modalFormSection">
+      <i class="fas fa-bell modal-icon"></i>
+      <h3>GET NOTIFIED</h3>
+      <p>Be the first to know when the first episode drops.</p>
+      <div class="modal-form">
+        <input type="text"  class="modal-input"      id="f_name"  placeholder="Your Name *"       autocomplete="name">
+        <input type="tel"   class="modal-input"      id="f_phone" placeholder="Phone Number *"    autocomplete="tel">
+        <input type="email" class="modal-input full" id="f_email" placeholder="Email Address *"   autocomplete="email">
+        <input type="text"  class="modal-input full" id="f_city"  placeholder="City / Location *" autocomplete="address-level2">
+        <button class="modal-submit" id="modalSubmit">NOTIFY ME</button>
+      </div>
+      <p id="formError" style="color:#c0392b;font-size:0.88rem;margin-top:10px;display:none;">Please fill in all fields correctly.</p>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <i class="fas fa-check-circle"></i>
+      <p>You are on the list! We will notify you when the first episode goes live.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-content">
+    <i class="fas fa-microphone footer-mic"></i>
+    <h2 class="footer-title">CONNECT WITH ME</h2>
+    <p class="footer-subtitle">LET'S START A CONVERSATION</p>
+    <div class="footer-rule"></div>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/company/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.instagram.com/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:prathmesh@prathmeshkanekar.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div class="social-label"><span>LINKEDIN</span><span>INSTAGRAM</span><span>EMAIL</span></div>
+    <div class="footer-divider"></div>
+    <p class="copyright">&copy; 2026 BEYOND TITLE &nbsp;|&nbsp; FOUNDER: MR. PRATHMESH KANEKAR</p>
+  </div>
+</footer>
+
+<!--
+  HOW THE FORM WORKS:
+  A hidden <iframe> catches the Google Form POST response (which would normally redirect).
+  The real <form> posts directly to Google with correct entry IDs.
+  This is the most reliable method — works on any hosted domain.
+-->
+<iframe name="gf_target" id="gf_target" style="display:none;width:0;height:0;border:none;" aria-hidden="true"></iframe>
+<form id="gf_form"
+      method="POST"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSd5b0pGgTyo_j0gsvs5cBAUH32w_U8w1zp3mT5HRkcLXgI9Fw/formResponse"
+      target="gf_target"
+      style="display:none;">
+  <input type="hidden" id="gf_name"  name="entry.1458201828" value="">
+  <input type="hidden" id="gf_email" name="entry.1256503440" value="">
+  <input type="hidden" id="gf_phone" name="entry.1543169249" value="">
+  <input type="hidden" id="gf_city"  name="entry.197621036"  value="">
+</form>
+
+<script>
+// ── Navbar auto-hide ──
+var navbar=document.getElementById('navbar'),trigger=document.getElementById('navTrigger'),hero=document.getElementById('heroSection'),timer;
+function showNav(){clearTimeout(timer);navbar.classList.add('visible');}
+function hideNav(){timer=setTimeout(function(){navbar.classList.remove('visible');},400);}
+trigger.addEventListener('mouseenter',showNav); trigger.addEventListener('mouseleave',hideNav);
+navbar.addEventListener('mouseenter',showNav);  navbar.addEventListener('mouseleave',hideNav);
+hero.addEventListener('mouseenter',showNav);    hero.addEventListener('mouseleave',hideNav);
+function checkMobile(){if(window.innerWidth<=768)navbar.classList.add('visible');}
+checkMobile(); window.addEventListener('resize',checkMobile);
+var toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
+toggle.addEventListener('click',function(){toggle.classList.toggle('open');links.classList.toggle('open');});
+links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggle.classList.remove('open');links.classList.remove('open');});});
+
+// ── Scroll reveal ──
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){
+    if(e.isIntersecting){e.target.style.transitionDelay=(i*0.08)+'s';e.target.classList.add('visible');obs.unobserve(e.target);}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+// ── Modal ──
+var modal=document.getElementById('notifyModal');
+var openBtn=document.getElementById('openModal');
+var closeBtn=document.getElementById('closeModal');
+var submitBtn=document.getElementById('modalSubmit');
+var formSection=document.getElementById('modalFormSection');
+var successSection=document.getElementById('modalSuccess');
+var formError=document.getElementById('formError');
+
+openBtn.addEventListener('click',function(){modal.classList.add('active');});
+
+function closeModal(){
+  modal.classList.remove('active');
+  setTimeout(function(){
+    formSection.style.display='';
+    successSection.style.display='none';
+    formError.style.display='none';
+    ['f_name','f_phone','f_email','f_city'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){el.value='';el.style.borderColor='';}
+    });
+    submitBtn.textContent='NOTIFY ME';
+    submitBtn.disabled=false;
+  },350);
+}
+closeBtn.addEventListener('click',closeModal);
+modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+// ── Form Submit: populate hidden form and POST to Google via iframe ──
+submitBtn.addEventListener('click',function(){
+  var nameEl  = document.getElementById('f_name');
+  var phoneEl = document.getElementById('f_phone');
+  var emailEl = document.getElementById('f_email');
+  var cityEl  = document.getElementById('f_city');
+
+  var name  = nameEl.value.trim();
+  var phone = phoneEl.value.trim();
+  var email = emailEl.value.trim();
+  var city  = cityEl.value.trim();
+
+  // Validate
+  var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  var phoneValid = phone.length >= 7;
+
+  [nameEl,phoneEl,emailEl,cityEl].forEach(function(el){el.style.borderColor='';});
+  formError.style.display='none';
+
+  var hasError=false;
+  if(!name)       {nameEl.style.borderColor='#c0392b'; hasError=true;}
+  if(!phoneValid) {phoneEl.style.borderColor='#c0392b'; hasError=true;}
+  if(!emailValid) {emailEl.style.borderColor='#c0392b'; hasError=true;}
+  if(!city)       {cityEl.style.borderColor='#c0392b'; hasError=true;}
+  if(hasError)    {formError.style.display='block'; return;}
+
+  // Set hidden form values
+  document.getElementById('gf_name').value  = name;
+  document.getElementById('gf_email').value = email;
+  document.getElementById('gf_phone').value = phone;
+  document.getElementById('gf_city').value  = city;
+
+  submitBtn.textContent='SENDING...';
+  submitBtn.disabled=true;
+
+  // Submit hidden form to Google (response caught by iframe, no page redirect)
+  document.getElementById('gf_form').submit();
+
+  // Show success after 1 second
+  setTimeout(function(){
+    formSection.style.display='none';
+    successSection.style.display='flex';
+    submitBtn.textContent='NOTIFY ME';
+    submitBtn.disabled=false;
+  },1000);
+});
+</script>
+</body>
+</html>
