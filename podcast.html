@@ -30,6 +30,7 @@
 </div>
 <div class="below-hero-name"></div>
 
+<!-- PODCAST COMING SOON — DO NOT CHANGE THIS SECTION -->
 <main class="coming-soon-section">
   <p class="coming-soon-label">EPISODE LAUNCH</p>
   <h2 class="coming-soon-title">PODCAST<br><span>COMING SOON</span></h2>
@@ -39,16 +40,142 @@
     <p>Every great career holds a story beyond the title. We are preparing conversations that go deeper — exploring the pivotal decisions, quiet struggles, and defining moments that shape extraordinary professionals.</p>
   </div>
   <button class="notify-btn" id="openModal"><i class="fas fa-bell"></i> GET NOTIFIED</button>
-  <div class="video-section">
-    <p class="video-section-label">WATCH THE TRAILER</p>
-    <div class="video-wrapper">
-      <div class="video-placeholder">
-        <i class="fas fa-play-circle"></i>
-        <p>VIDEO COMING SOON</p>
+</main>
+
+<!-- ================================================================
+     INTRODUCTION VIDEOS SECTION
+     HOW TO ADD YOUR NEXT VIDEO (Video 2, then Video 3):
+     ----------------------------------------------------------------
+     STEP 1: Go to your new YouTube video
+     STEP 2: Copy URL e.g. https://youtu.be/XXXXXXXXXXX
+     STEP 3: Your Video ID = the last part e.g. "aLdAUioHMK8"
+     STEP 4: Find var INTRO_VIDEOS = [ below in the script
+     STEP 5: Add one new line at the VERY TOP of the array:
+               { id: "YOUR_NEW_ID", title: "Your Video Title" },
+     STEP 6: Save and upload to GitHub. Done!
+
+     RULE: TOP of array = shown FIRST to visitors.
+     ● When Video 2 is added at top → Video 2 shows first, swipe right → Video 1
+     ● When Video 3 is added at top → Video 3 shows first, swipe right → Video 2 → Video 1
+     ================================================================ -->
+<section class="intro-section">
+  <div class="intro-section-inner">
+    <p class="intro-label reveal">INTRODUCTION</p>
+    <h2 class="section-heading reveal" style="text-align:center;">MEET THE HOST</h2>
+    <hr class="gold-line reveal" style="margin:16px auto 24px;">
+    <p class="intro-desc reveal">Before the podcast begins, hear directly from Prathmesh — his story, his purpose, and what drives Beyond Title.</p>
+
+    <div class="intro-carousel-wrap">
+      <div class="carousel-container">
+        <button class="carousel-arrow carousel-prev" id="introPrev" aria-label="Previous video">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow carousel-next" id="introNext" aria-label="Next video">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-video-wrap">
+          <div class="video-wrapper" id="introVideoWrapper">
+            <iframe id="introIframe"
+              src=""
+              title="Beyond Title Introduction"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="carousel-ep-info">
+            <span class="carousel-ep-number" id="introVidNumber"></span>
+            <span class="carousel-ep-title" id="introVidTitle"></span>
+          </div>
+        </div>
+        <div class="carousel-dots" id="introDots"></div>
+        <p class="carousel-counter" id="introCounter"></p>
       </div>
+      <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank" class="yt-subscribe-btn">
+        <i class="fab fa-youtube"></i> SUBSCRIBE ON YOUTUBE
+      </a>
     </div>
   </div>
-</main>
+</section>
+
+<script>
+// ============================================================
+// INTRODUCTION VIDEOS — NEWEST VIDEO GOES AT THE TOP
+// ============================================================
+// Right now you have 1 video. When you upload Video 2:
+//   Add { id: "VIDEO_2_ID", title: "Video 2 Title" },  at the TOP
+// When you upload Video 3:
+//   Add { id: "VIDEO_3_ID", title: "Video 3 Title" },  above Video 2
+// The TOP entry is ALWAYS what visitors see first.
+// ============================================================
+var INTRO_VIDEOS = [
+  {
+    id:    "aLdAUioHMK8",
+    title: "Why I Started Beyond Title | Prathmesh Kanekar"
+  }
+  // ---- ADD VIDEO 2 ABOVE THIS LINE when ready ----
+  // { id: "VIDEO_2_ID", title: "Video 2 Title" },
+  // ---- ADD VIDEO 3 ABOVE VIDEO 2 when ready ----
+  // { id: "VIDEO_3_ID", title: "Video 3 Title" },
+];
+// ============================================================
+
+var introIndex   = 0;
+var introIframe  = document.getElementById('introIframe');
+var introVidNum  = document.getElementById('introVidNumber');
+var introVidTitl = document.getElementById('introVidTitle');
+var introCounter = document.getElementById('introCounter');
+var introDotsW   = document.getElementById('introDots');
+var introPrevBtn = document.getElementById('introPrev');
+var introNextBtn = document.getElementById('introNext');
+
+function buildIntroDots() {
+  introDotsW.innerHTML = '';
+  INTRO_VIDEOS.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Video ' + (i + 1));
+    d.addEventListener('click', function() { introGoTo(i); });
+    introDotsW.appendChild(d);
+  });
+}
+
+function introGoTo(index) {
+  introIframe.src = '';
+  introIndex = index;
+  var v = INTRO_VIDEOS[index];
+  introIframe.src = 'https://www.youtube.com/embed/' + v.id + '?rel=0';
+  introVidNum.textContent  = index === 0 ? 'LATEST' : 'VIDEO ' + String(INTRO_VIDEOS.length - index).padStart(2, '0');
+  introVidTitl.textContent = v.title;
+  introCounter.textContent = INTRO_VIDEOS.length > 1 ? (index + 1) + ' / ' + INTRO_VIDEOS.length : '';
+  introDotsW.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === index);
+  });
+  introPrevBtn.style.opacity       = index === 0 ? '0.25' : '1';
+  introPrevBtn.style.pointerEvents = index === 0 ? 'none' : 'auto';
+  introNextBtn.style.opacity       = index === INTRO_VIDEOS.length - 1 ? '0.25' : '1';
+  introNextBtn.style.pointerEvents = index === INTRO_VIDEOS.length - 1 ? 'none' : 'auto';
+  introPrevBtn.style.display = INTRO_VIDEOS.length <= 1 ? 'none' : 'flex';
+  introNextBtn.style.display = INTRO_VIDEOS.length <= 1 ? 'none' : 'flex';
+}
+
+introPrevBtn.addEventListener('click', function() { if (introIndex > 0) introGoTo(introIndex - 1); });
+introNextBtn.addEventListener('click', function() { if (introIndex < INTRO_VIDEOS.length - 1) introGoTo(introIndex + 1); });
+
+var introTouchX = 0;
+var introWrap = document.getElementById('introVideoWrapper');
+introWrap.addEventListener('touchstart', function(e) { introTouchX = e.changedTouches[0].clientX; }, { passive: true });
+introWrap.addEventListener('touchend', function(e) {
+  var diff = introTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) {
+    if (diff > 0 && introIndex < INTRO_VIDEOS.length - 1) introGoTo(introIndex + 1);
+    if (diff < 0 && introIndex > 0) introGoTo(introIndex - 1);
+  }
+}, { passive: true });
+
+buildIntroDots();
+introGoTo(0);
+</script>
 
 <section class="full-section dark">
   <div class="full-section-inner">
@@ -96,20 +223,20 @@
     <h2 class="section-heading" style="color:var(--gold);text-align:center;">BE A GUEST</h2>
     <p>If you have a meaningful story or valuable experience to share, you are welcome to be part of Beyond Title. Every story matters.</p>
     <div class="guest-btn-row">
-      <a href="mailto:prathmesh@prathmeshkanekar.com?subject=Beyond Title - Guest Request" class="btn-gold"><i class="fas fa-paper-plane"></i> APPLY TO BE A GUEST</a>
+      <a href="mailto:prathmesh@prathmeshkanekar.com" class="btn-gold"><i class="fas fa-paper-plane"></i> APPLY TO BE A GUEST</a>
       <a href="https://www.linkedin.com/company/beyondtitlewithprathmesh/" target="_blank" class="btn-outline"><i class="fab fa-linkedin"></i> CONNECT ON LINKEDIN</a>
     </div>
   </div>
 </section>
 
-<!-- MODAL -->
+<!-- NOTIFY MODAL -->
 <div class="modal-overlay" id="notifyModal">
   <div class="modal-box">
     <button class="modal-close" id="closeModal">&times;</button>
     <div id="modalFormSection">
       <i class="fas fa-bell modal-icon"></i>
       <h3>GET NOTIFIED</h3>
-      <p>Be the first to know when the first episode drops.</p>
+      <p>Be the first to know when the next episode drops.</p>
       <div class="modal-form">
         <input type="text"  class="modal-input"      id="f_name"  placeholder="Your Name *"       autocomplete="name">
         <input type="tel"   class="modal-input"      id="f_phone" placeholder="Phone Number *"    autocomplete="tel">
@@ -119,9 +246,9 @@
       </div>
       <p id="formError" style="color:#c0392b;font-size:0.88rem;margin-top:10px;display:none;">Please fill in all fields correctly.</p>
     </div>
-    <div class="modal-success" id="modalSuccess">
+    <div class="modal-success" id="modalSuccess" style="display:none;">
       <i class="fas fa-check-circle"></i>
-      <p>You are on the list! We will notify you when the first episode goes live.</p>
+      <p>You are on the list! We will notify you when the next episode goes live.</p>
     </div>
   </div>
 </div>
@@ -135,20 +262,16 @@
     <div class="social-icons">
       <a href="https://www.linkedin.com/company/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-linkedin"></i></a>
       <a href="https://www.instagram.com/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank"><i class="fab fa-youtube"></i></a>
       <a href="mailto:prathmesh@prathmeshkanekar.com"><i class="fas fa-envelope"></i></a>
     </div>
-    <div class="social-label"><span>LINKEDIN</span><span>INSTAGRAM</span><span>EMAIL</span></div>
+    <div class="social-label"><span>LINKEDIN</span><span>INSTAGRAM</span><span>YOUTUBE</span><span>EMAIL</span></div>
     <div class="footer-divider"></div>
     <p class="copyright">&copy; 2026 BEYOND TITLE &nbsp;|&nbsp; FOUNDER: MR. PRATHMESH KANEKAR</p>
   </div>
 </footer>
 
-<!--
-  HOW THE FORM WORKS:
-  A hidden <iframe> catches the Google Form POST response (which would normally redirect).
-  The real <form> posts directly to Google with correct entry IDs.
-  This is the most reliable method — works on any hosted domain.
--->
+<!-- Google Form hidden submission -->
 <iframe name="gf_target" id="gf_target" style="display:none;width:0;height:0;border:none;" aria-hidden="true"></iframe>
 <form id="gf_form"
       method="POST"
@@ -162,25 +285,21 @@
 </form>
 
 <script>
-// ── Navbar auto-hide ──
+// ── Navbar ──
 var navbar=document.getElementById('navbar'),trigger=document.getElementById('navTrigger'),hero=document.getElementById('heroSection'),timer;
 function showNav(){clearTimeout(timer);navbar.classList.add('visible');}
-function hideNav(){timer=setTimeout(function(){navbar.classList.remove('visible');},400);}
-trigger.addEventListener('mouseenter',showNav); trigger.addEventListener('mouseleave',hideNav);
-navbar.addEventListener('mouseenter',showNav);  navbar.addEventListener('mouseleave',hideNav);
-hero.addEventListener('mouseenter',showNav);    hero.addEventListener('mouseleave',hideNav);
-function checkMobile(){if(window.innerWidth<=768)navbar.classList.add('visible');}
-checkMobile(); window.addEventListener('resize',checkMobile);
+function hideNav(){timer=setTimeout(function(){navbar.classList.remove('visible');},80);}
+trigger.addEventListener('mouseenter',showNav);trigger.addEventListener('mouseleave',hideNav);
+navbar.addEventListener('mouseenter',showNav);navbar.addEventListener('mouseleave',hideNav);
+hero.addEventListener('mouseenter',showNav);hero.addEventListener('mouseleave',hideNav);
+function checkMobile(){if(window.innerWidth<=768){navbar.classList.add('visible');navbar.style.position='sticky';}else{navbar.style.position='fixed';}}
+checkMobile();window.addEventListener('resize',checkMobile);
 var toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
 toggle.addEventListener('click',function(){toggle.classList.toggle('open');links.classList.toggle('open');});
 links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggle.classList.remove('open');links.classList.remove('open');});});
 
 // ── Scroll reveal ──
-var obs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e,i){
-    if(e.isIntersecting){e.target.style.transitionDelay=(i*0.08)+'s';e.target.classList.add('visible');obs.unobserve(e.target);}
-  });
-},{threshold:0.1});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting){e.target.style.transitionDelay=(i*0.08)+'s';e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 
 // ── Modal ──
@@ -212,51 +331,36 @@ closeBtn.addEventListener('click',closeModal);
 modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
-// ── Form Submit: populate hidden form and POST to Google via iframe ──
 submitBtn.addEventListener('click',function(){
-  var nameEl  = document.getElementById('f_name');
-  var phoneEl = document.getElementById('f_phone');
-  var emailEl = document.getElementById('f_email');
-  var cityEl  = document.getElementById('f_city');
-
-  var name  = nameEl.value.trim();
-  var phone = phoneEl.value.trim();
-  var email = emailEl.value.trim();
-  var city  = cityEl.value.trim();
-
-  // Validate
-  var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  var phoneValid = phone.length >= 7;
-
+  var nameEl=document.getElementById('f_name');
+  var phoneEl=document.getElementById('f_phone');
+  var emailEl=document.getElementById('f_email');
+  var cityEl=document.getElementById('f_city');
+  var name=nameEl.value.trim();
+  var phone=phoneEl.value.trim();
+  var email=emailEl.value.trim();
+  var city=cityEl.value.trim();
+  var emailValid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  var phoneValid=phone.length>=7;
   [nameEl,phoneEl,emailEl,cityEl].forEach(function(el){el.style.borderColor='';});
   formError.style.display='none';
-
   var hasError=false;
-  if(!name)       {nameEl.style.borderColor='#c0392b'; hasError=true;}
-  if(!phoneValid) {phoneEl.style.borderColor='#c0392b'; hasError=true;}
-  if(!emailValid) {emailEl.style.borderColor='#c0392b'; hasError=true;}
-  if(!city)       {cityEl.style.borderColor='#c0392b'; hasError=true;}
-  if(hasError)    {formError.style.display='block'; return;}
-
-  // Set hidden form values
-  document.getElementById('gf_name').value  = name;
-  document.getElementById('gf_email').value = email;
-  document.getElementById('gf_phone').value = phone;
-  document.getElementById('gf_city').value  = city;
-
+  if(!name){nameEl.style.borderColor='#c0392b';hasError=true;}
+  if(!phoneValid){phoneEl.style.borderColor='#c0392b';hasError=true;}
+  if(!emailValid){emailEl.style.borderColor='#c0392b';hasError=true;}
+  if(!city){cityEl.style.borderColor='#c0392b';hasError=true;}
+  if(hasError){formError.style.display='block';return;}
+  document.getElementById('gf_name').value=name;
+  document.getElementById('gf_email').value=email;
+  document.getElementById('gf_phone').value=phone;
+  document.getElementById('gf_city').value=city;
   submitBtn.textContent='SENDING...';
   submitBtn.disabled=true;
-
-  // Submit hidden form to Google (response caught by iframe, no page redirect)
   document.getElementById('gf_form').submit();
-
-  // Show success after 1 second
   setTimeout(function(){
     formSection.style.display='none';
     successSection.style.display='flex';
-    submitBtn.textContent='NOTIFY ME';
-    submitBtn.disabled=false;
-  },1000);
+  },900);
 });
 </script>
 </body>
