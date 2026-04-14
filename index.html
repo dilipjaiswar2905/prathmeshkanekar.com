@@ -100,9 +100,10 @@
     <div class="social-icons">
       <a href="https://www.linkedin.com/company/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-linkedin"></i></a>
       <a href="https://www.instagram.com/beyondtitlewithprathmesh/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank"><i class="fab fa-youtube"></i></a>
       <a href="mailto:prathmesh@prathmeshkanekar.com"><i class="fas fa-envelope"></i></a>
     </div>
-    <div class="social-label"><span>LINKEDIN</span><span>INSTAGRAM</span><span>EMAIL</span></div>
+    <div class="social-label"><span>LINKEDIN</span><span>INSTAGRAM</span><span>YOUTUBE</span><span>EMAIL</span></div>
     <div class="footer-divider"></div>
     <p class="copyright">&copy; 2026 BEYOND TITLE &nbsp;|&nbsp; FOUNDER: MR. PRATHMESH KANEKAR</p>
   </div>
@@ -111,11 +112,11 @@
 <script>
 var navbar=document.getElementById('navbar'),trigger=document.getElementById('navTrigger'),hero=document.getElementById('heroSection'),timer;
 function showNav(){clearTimeout(timer);navbar.classList.add('visible');}
-function hideNav(){timer=setTimeout(function(){navbar.classList.remove('visible');},400);}
+function hideNav(){timer=setTimeout(function(){navbar.classList.remove('visible');},80);}
 trigger.addEventListener('mouseenter',showNav);trigger.addEventListener('mouseleave',hideNav);
 navbar.addEventListener('mouseenter',showNav);navbar.addEventListener('mouseleave',hideNav);
 hero.addEventListener('mouseenter',showNav);hero.addEventListener('mouseleave',hideNav);
-function checkMobile(){if(window.innerWidth<=768)navbar.classList.add('visible');}
+function checkMobile(){if(window.innerWidth<=768){navbar.classList.add('visible');navbar.style.position='sticky';}else{navbar.style.position='fixed';}}
 checkMobile();window.addEventListener('resize',checkMobile);
 var toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
 toggle.addEventListener('click',function(){toggle.classList.toggle('open');links.classList.toggle('open');});
