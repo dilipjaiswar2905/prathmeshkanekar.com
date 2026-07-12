@@ -37,17 +37,128 @@
 </div>
 <div class="below-hero-name"></div>
 
-<!-- PODCAST COMING SOON — DO NOT CHANGE THIS SECTION -->
-<main class="coming-soon-section">
-  <p class="coming-soon-label">EPISODE LAUNCH</p>
-  <h2 class="coming-soon-title">PODCAST<br><span>COMING SOON</span></h2>
-  <p class="coming-soon-desc">We are curating insightful, deeply human conversations with professionals who have remarkable stories to tell. The first episode is on its way.</p>
-  <div class="coming-soon-box">
-    <i class="fas fa-microphone-alt mic-icon-large"></i>
-    <p>Every great career holds a story beyond the title. We are preparing conversations that go deeper — exploring the pivotal decisions, quiet struggles, and defining moments that shape extraordinary professionals.</p>
+
+<!-- ================================================================
+     PODCAST VIDEOS SECTION
+     HOW TO ADD A NEW PODCAST VIDEO:
+     1. Go to your new YouTube video
+     2. Copy URL e.g. https://youtu.be/XXXXXXXXXXX
+     3. Your Video ID = the last part e.g. "iPZRatWUEt8"
+     4. Find var PODCAST_VIDEOS = [ below in the script
+     5. Add one new line at the VERY TOP of the array:
+          { id: "NEW_ID", title: "Episode Title | Guest Name" },
+     6. Save and upload to GitHub. Done!
+     Newest episode always shows FIRST. Swipe right for older ones.
+     ================================================================ -->
+<section class="podcast-vid-section">
+  <div class="podcast-vid-inner">
+    <p class="podcast-vid-label reveal">PODCAST VIDEOS</p>
+    <h2 class="section-heading reveal" style="text-align:center;">WATCH THE LATEST EPISODE</h2>
+    <hr class="gold-line reveal" style="margin:16px auto 28px;">
+    <div class="podcast-vid-carousel-wrap">
+      <div class="carousel-container">
+        <button class="carousel-arrow carousel-prev" id="podPrev" aria-label="Previous episode">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow carousel-next" id="podNext" aria-label="Next episode">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-video-wrap">
+          <div class="video-wrapper" id="podVideoWrapper">
+            <iframe id="podIframe"
+              src=""
+              title="Beyond Title Podcast Episode"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="carousel-ep-info">
+            <span class="carousel-ep-number" id="podEpNumber"></span>
+            <span class="carousel-ep-title" id="podEpTitle"></span>
+          </div>
+        </div>
+        <div class="carousel-dots" id="podDots"></div>
+        <p class="carousel-counter" id="podCounter"></p>
+      </div>
+      <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank" class="yt-subscribe-btn">
+        <i class="fab fa-youtube"></i> SUBSCRIBE ON YOUTUBE
+      </a>
+    </div>
   </div>
-  <button class="notify-btn" id="openModal"><i class="fas fa-bell"></i> GET NOTIFIED</button>
-</main>
+</section>
+
+<script>
+// ============================================================
+// PODCAST VIDEOS — ADD NEWEST EPISODE AT THE TOP
+// ============================================================
+var PODCAST_VIDEOS = [
+  {
+    id:    "iPZRatWUEt8",
+    title: "Beyond Title with PK | Dr. Afra on Pelvic Floor Therapy, Prostate Health & Cancer Recovery"
+  }
+  // ---- ADD NEXT EPISODE ABOVE THIS LINE ----
+  // { id: "NEW_EPISODE_ID", title: "Episode Title | Guest Name" },
+];
+// ============================================================
+
+var podIndex   = 0;
+var podIframe  = document.getElementById('podIframe');
+var podEpNum   = document.getElementById('podEpNumber');
+var podEpTitl  = document.getElementById('podEpTitle');
+var podCounter = document.getElementById('podCounter');
+var podDotsW   = document.getElementById('podDots');
+var podPrevBtn = document.getElementById('podPrev');
+var podNextBtn = document.getElementById('podNext');
+
+function buildPodDots() {
+  podDotsW.innerHTML = '';
+  PODCAST_VIDEOS.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Episode ' + (i + 1));
+    d.addEventListener('click', function() { podGoTo(i); });
+    podDotsW.appendChild(d);
+  });
+}
+
+function podGoTo(index) {
+  podIframe.src = '';
+  podIndex = index;
+  var v = PODCAST_VIDEOS[index];
+  podIframe.src = 'https://www.youtube.com/embed/' + v.id + '?rel=0';
+  podEpNum.textContent  = index === 0 ? 'LATEST' : 'EP ' + String(PODCAST_VIDEOS.length - index).padStart(2, '0');
+  podEpTitl.textContent = v.title;
+  podCounter.textContent = PODCAST_VIDEOS.length > 1 ? (index + 1) + ' / ' + PODCAST_VIDEOS.length : '';
+  podDotsW.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === index);
+  });
+  podPrevBtn.style.opacity       = index === 0 ? '0.25' : '1';
+  podPrevBtn.style.pointerEvents = index === 0 ? 'none' : 'auto';
+  podNextBtn.style.opacity       = index === PODCAST_VIDEOS.length - 1 ? '0.25' : '1';
+  podNextBtn.style.pointerEvents = index === PODCAST_VIDEOS.length - 1 ? 'none' : 'auto';
+  podPrevBtn.style.display = PODCAST_VIDEOS.length <= 1 ? 'none' : 'flex';
+  podNextBtn.style.display = PODCAST_VIDEOS.length <= 1 ? 'none' : 'flex';
+}
+
+podPrevBtn.addEventListener('click', function() { if (podIndex > 0) podGoTo(podIndex - 1); });
+podNextBtn.addEventListener('click', function() { if (podIndex < PODCAST_VIDEOS.length - 1) podGoTo(podIndex + 1); });
+
+// Swipe support
+var podTouchX = 0;
+var podWrap = document.getElementById('podVideoWrapper');
+podWrap.addEventListener('touchstart', function(e) { podTouchX = e.changedTouches[0].clientX; }, { passive: true });
+podWrap.addEventListener('touchend', function(e) {
+  var diff = podTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) {
+    if (diff > 0 && podIndex < PODCAST_VIDEOS.length - 1) podGoTo(podIndex + 1);
+    if (diff < 0 && podIndex > 0) podGoTo(podIndex - 1);
+  }
+}, { passive: true });
+
+buildPodDots();
+podGoTo(0);
+</script>
 
 <!-- ================================================================
      INTRODUCTION VIDEOS SECTION
@@ -68,127 +179,62 @@
 <section class="intro-section">
   <div class="intro-section-inner">
     <p class="intro-label reveal">INTRODUCTION</p>
-    <h2 class="section-heading reveal" style="text-align:center;">MEET THE HOST</h2>
-    <hr class="gold-line reveal" style="margin:16px auto 24px;">
-    <p class="intro-desc reveal">Before the podcast begins, hear directly from Prathmesh — his story, his purpose, and what drives Beyond Title.</p>
+    <h2 class="section-heading reveal" style="text-align:center;">INTRODUCTION VIDEOS</h2>
+    <hr class="gold-line reveal" style="margin:16px auto 28px;">
 
-    <div class="intro-carousel-wrap">
-      <div class="carousel-container">
-        <button class="carousel-arrow carousel-prev" id="introPrev" aria-label="Previous video">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="carousel-arrow carousel-next" id="introNext" aria-label="Next video">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="carousel-video-wrap">
-          <div class="video-wrapper" id="introVideoWrapper">
-            <iframe id="introIframe"
-              src=""
-              title="Beyond Title Introduction"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <div class="carousel-ep-info">
-            <span class="carousel-ep-number" id="introVidNumber"></span>
-            <span class="carousel-ep-title" id="introVidTitle"></span>
-          </div>
+    <!-- ============================================================
+         HOW TO ADD A NEW INTRO VIDEO:
+         Add a new <div class="intro-vid-card"> block below,
+         copy an existing one and change the YouTube embed ID and title.
+         ============================================================ -->
+    <div class="intro-vid-grid">
+
+      <div class="intro-vid-card reveal">
+        <div class="intro-vid-thumb">
+          <iframe
+            src="https://www.youtube.com/embed/MGCyFKlxE3M?rel=0"
+            title="What viewers will gain from this podcast"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy">
+          </iframe>
         </div>
-        <div class="carousel-dots" id="introDots"></div>
-        <p class="carousel-counter" id="introCounter"></p>
+        <p class="intro-vid-title">What viewers will gain from this podcast | Prathmesh Kanekar | Beyond Title</p>
       </div>
-      <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank" class="yt-subscribe-btn">
-        <i class="fab fa-youtube"></i> SUBSCRIBE ON YOUTUBE
-      </a>
+
+      <div class="intro-vid-card reveal">
+        <div class="intro-vid-thumb">
+          <iframe
+            src="https://www.youtube.com/embed/PQXM83K_eAE?rel=0"
+            title="What Beyond Title Stands For"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy">
+          </iframe>
+        </div>
+        <p class="intro-vid-title">What Beyond Title Stands For | Prathmesh Kanekar | Beyond Title</p>
+      </div>
+
+      <div class="intro-vid-card reveal">
+        <div class="intro-vid-thumb">
+          <iframe
+            src="https://www.youtube.com/embed/aLdAUioHMK8?rel=0"
+            title="My story - Why I started beyond title"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy">
+          </iframe>
+        </div>
+        <p class="intro-vid-title">My story - Why I started beyond title | Prathmesh Kanekar</p>
+      </div>
+
     </div>
+
+    <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank" class="yt-subscribe-btn" style="margin-top:36px;">
+      <i class="fab fa-youtube"></i> SUBSCRIBE ON YOUTUBE
+    </a>
   </div>
 </section>
-
-<script>
-// ============================================================
-// INTRODUCTION VIDEOS — NEWEST VIDEO GOES AT THE TOP
-// ============================================================
-// Right now you have 1 video. When you upload Video 2:
-//   Add { id: "VIDEO_2_ID", title: "Video 2 Title" },  at the TOP
-// When you upload Video 3:
-//   Add { id: "VIDEO_3_ID", title: "Video 3 Title" },  above Video 2
-// The TOP entry is ALWAYS what visitors see first.
-// ============================================================
-var INTRO_VIDEOS = [
-  {
-    id:    "MGCyFKlxE3M",
-    title: "What viewers will gain from this podcast | Prathmesh Kanekar | Beyond Title"
-  },
-  {
-    id:    "PQXM83K_eAE",
-    title: "What Beyond Title Stands For | Prathmesh Kanekar | Beyond Title"
-  },
-  {
-    id:    "aLdAUioHMK8",
-    title: "My story - Why I started beyond title | Prathmesh Kanekar"
-  }
-  // ---- ADD VIDEO 4 ABOVE THIS LINE when ready ----
-  // { id: "VIDEO_4_ID", title: "Video 4 Title" },
-];
-// ============================================================
-
-var introIndex   = 0;
-var introIframe  = document.getElementById('introIframe');
-var introVidNum  = document.getElementById('introVidNumber');
-var introVidTitl = document.getElementById('introVidTitle');
-var introCounter = document.getElementById('introCounter');
-var introDotsW   = document.getElementById('introDots');
-var introPrevBtn = document.getElementById('introPrev');
-var introNextBtn = document.getElementById('introNext');
-
-function buildIntroDots() {
-  introDotsW.innerHTML = '';
-  INTRO_VIDEOS.forEach(function(_, i) {
-    var d = document.createElement('button');
-    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', 'Video ' + (i + 1));
-    d.addEventListener('click', function() { introGoTo(i); });
-    introDotsW.appendChild(d);
-  });
-}
-
-function introGoTo(index) {
-  introIframe.src = '';
-  introIndex = index;
-  var v = INTRO_VIDEOS[index];
-  introIframe.src = 'https://www.youtube.com/embed/' + v.id + '?rel=0';
-  introVidNum.textContent  = index === 0 ? 'LATEST' : 'VIDEO ' + String(INTRO_VIDEOS.length - index).padStart(2, '0');
-  introVidTitl.textContent = v.title;
-  introCounter.textContent = INTRO_VIDEOS.length > 1 ? (index + 1) + ' / ' + INTRO_VIDEOS.length : '';
-  introDotsW.querySelectorAll('.carousel-dot').forEach(function(d, i) {
-    d.classList.toggle('active', i === index);
-  });
-  introPrevBtn.style.opacity       = index === 0 ? '0.25' : '1';
-  introPrevBtn.style.pointerEvents = index === 0 ? 'none' : 'auto';
-  introNextBtn.style.opacity       = index === INTRO_VIDEOS.length - 1 ? '0.25' : '1';
-  introNextBtn.style.pointerEvents = index === INTRO_VIDEOS.length - 1 ? 'none' : 'auto';
-  introPrevBtn.style.display = INTRO_VIDEOS.length <= 1 ? 'none' : 'flex';
-  introNextBtn.style.display = INTRO_VIDEOS.length <= 1 ? 'none' : 'flex';
-}
-
-introPrevBtn.addEventListener('click', function() { if (introIndex > 0) introGoTo(introIndex - 1); });
-introNextBtn.addEventListener('click', function() { if (introIndex < INTRO_VIDEOS.length - 1) introGoTo(introIndex + 1); });
-
-var introTouchX = 0;
-var introWrap = document.getElementById('introVideoWrapper');
-introWrap.addEventListener('touchstart', function(e) { introTouchX = e.changedTouches[0].clientX; }, { passive: true });
-introWrap.addEventListener('touchend', function(e) {
-  var diff = introTouchX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 40) {
-    if (diff > 0 && introIndex < INTRO_VIDEOS.length - 1) introGoTo(introIndex + 1);
-    if (diff < 0 && introIndex > 0) introGoTo(introIndex - 1);
-  }
-}, { passive: true });
-
-buildIntroDots();
-introGoTo(0);
-</script>
 
 <section class="full-section dark">
   <div class="full-section-inner">
@@ -242,30 +288,6 @@ introGoTo(0);
   </div>
 </section>
 
-<!-- NOTIFY MODAL -->
-<div class="modal-overlay" id="notifyModal">
-  <div class="modal-box">
-    <button class="modal-close" id="closeModal">&times;</button>
-    <div id="modalFormSection">
-      <i class="fas fa-bell modal-icon"></i>
-      <h3>GET NOTIFIED</h3>
-      <p>Be the first to know when the next episode drops.</p>
-      <div class="modal-form">
-        <input type="text"  class="modal-input"      id="f_name"  placeholder="Your Name *"       autocomplete="name">
-        <input type="tel"   class="modal-input"      id="f_phone" placeholder="Phone Number *"    autocomplete="tel">
-        <input type="email" class="modal-input full" id="f_email" placeholder="Email Address *"   autocomplete="email">
-        <input type="text"  class="modal-input full" id="f_city"  placeholder="City / Location *" autocomplete="address-level2">
-        <button class="modal-submit" id="modalSubmit">NOTIFY ME</button>
-      </div>
-      <p id="formError" style="color:#c0392b;font-size:0.88rem;margin-top:10px;display:none;">Please fill in all fields correctly.</p>
-    </div>
-    <div class="modal-success" id="modalSuccess" style="display:none;">
-      <i class="fas fa-check-circle"></i>
-      <p>You are on the list! We will notify you when the next episode goes live.</p>
-    </div>
-  </div>
-</div>
-
 <footer class="footer-section">
   <div class="footer-content">
     <i class="fas fa-microphone footer-mic"></i>
@@ -283,19 +305,6 @@ introGoTo(0);
     <p class="copyright">&copy; 2026 BEYOND TITLE &nbsp;|&nbsp; FOUNDER: MR. PRATHMESH KANEKAR</p>
   </div>
 </footer>
-
-<!-- Google Form hidden submission -->
-<iframe name="gf_target" id="gf_target" style="display:none;width:0;height:0;border:none;" aria-hidden="true"></iframe>
-<form id="gf_form"
-      method="POST"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSd5b0pGgTyo_j0gsvs5cBAUH32w_U8w1zp3mT5HRkcLXgI9Fw/formResponse"
-      target="gf_target"
-      style="display:none;">
-  <input type="hidden" id="gf_name"  name="entry.1458201828" value="">
-  <input type="hidden" id="gf_email" name="entry.1256503440" value="">
-  <input type="hidden" id="gf_phone" name="entry.1543169249" value="">
-  <input type="hidden" id="gf_city"  name="entry.197621036"  value="">
-</form>
 
 <script>
 // ── Navbar ──
@@ -315,16 +324,6 @@ links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',funct
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting){e.target.style.transitionDelay=(i*0.08)+'s';e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 
-// ── Modal ──
-var modal=document.getElementById('notifyModal');
-var openBtn=document.getElementById('openModal');
-var closeBtn=document.getElementById('closeModal');
-var submitBtn=document.getElementById('modalSubmit');
-var formSection=document.getElementById('modalFormSection');
-var successSection=document.getElementById('modalSuccess');
-var formError=document.getElementById('formError');
-
-openBtn.addEventListener('click',function(){modal.classList.add('active');});
 
 function closeModal(){
   modal.classList.remove('active');
