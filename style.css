@@ -295,3 +295,11 @@ body{font-family:'Cormorant Garamond',Georgia,serif;background-color:var(--white
   .intro-vid-grid{grid-template-columns:1fr;gap:20px;}
   .podcast-vid-carousel-wrap{max-width:100%;}
 }
+
+/* ── DESKTOP / MOBILE VISIBILITY SWITCH ── */
+.desktop-only{display:grid;}
+.mobile-only{display:none;}
+@media(max-width:768px){
+  .desktop-only{display:none !important;}
+  .mobile-only{display:block;}
+}
