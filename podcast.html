@@ -184,15 +184,16 @@ podGoTo(0);
 
     <!-- ============================================================
          HOW TO ADD A NEW INTRO VIDEO:
-         Add a new <div class="intro-vid-card"> block below,
-         copy an existing one and change the YouTube embed ID and title.
+         1. Add new card in DESKTOP GRID below (copy existing card, change ID + title)
+         2. Add same video in MOBILE CAROUSEL VIDEOS array in the script below
          ============================================================ -->
-    <div class="intro-vid-grid">
+
+    <!-- DESKTOP: 3-column grid (hidden on mobile) -->
+    <div class="intro-vid-grid desktop-only">
 
       <div class="intro-vid-card reveal">
         <div class="intro-vid-thumb">
-          <iframe
-            src="https://www.youtube.com/embed/MGCyFKlxE3M?rel=0"
+          <iframe src="https://www.youtube.com/embed/MGCyFKlxE3M?rel=0"
             title="What viewers will gain from this podcast"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -204,8 +205,7 @@ podGoTo(0);
 
       <div class="intro-vid-card reveal">
         <div class="intro-vid-thumb">
-          <iframe
-            src="https://www.youtube.com/embed/PQXM83K_eAE?rel=0"
+          <iframe src="https://www.youtube.com/embed/PQXM83K_eAE?rel=0"
             title="What Beyond Title Stands For"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -217,8 +217,7 @@ podGoTo(0);
 
       <div class="intro-vid-card reveal">
         <div class="intro-vid-thumb">
-          <iframe
-            src="https://www.youtube.com/embed/aLdAUioHMK8?rel=0"
+          <iframe src="https://www.youtube.com/embed/aLdAUioHMK8?rel=0"
             title="My story - Why I started beyond title"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -230,11 +229,126 @@ podGoTo(0);
 
     </div>
 
+    <!-- MOBILE: Carousel (hidden on desktop) -->
+    <div class="mobile-only">
+      <div class="carousel-container">
+        <button class="carousel-arrow carousel-prev" id="mobIntroPrev" aria-label="Previous video">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow carousel-next" id="mobIntroNext" aria-label="Next video">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-video-wrap">
+          <div class="video-wrapper" id="mobIntroWrapper">
+            <iframe id="mobIntroIframe"
+              src=""
+              title="Beyond Title Introduction"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="carousel-ep-info">
+            <span class="carousel-ep-number" id="mobIntroNum"></span>
+            <span class="carousel-ep-title" id="mobIntroTitle"></span>
+          </div>
+        </div>
+        <div class="carousel-dots" id="mobIntroDots"></div>
+        <p class="carousel-counter" id="mobIntroCounter"></p>
+      </div>
+    </div>
+
     <a href="https://youtube.com/@beyondtitlewithprathmesh" target="_blank" class="yt-subscribe-btn" style="margin-top:36px;">
       <i class="fab fa-youtube"></i> SUBSCRIBE ON YOUTUBE
     </a>
   </div>
 </section>
+
+<script>
+// ============================================================
+// MOBILE CAROUSEL — same videos as desktop grid
+// ADD NEW VIDEO: add at TOP of array (newest first)
+// ============================================================
+var MOB_INTRO = [
+  {
+    id:    "MGCyFKlxE3M",
+    title: "What viewers will gain from this podcast | Prathmesh Kanekar | Beyond Title"
+  },
+  {
+    id:    "PQXM83K_eAE",
+    title: "What Beyond Title Stands For | Prathmesh Kanekar | Beyond Title"
+  },
+  {
+    id:    "aLdAUioHMK8",
+    title: "My story - Why I started beyond title | Prathmesh Kanekar"
+  }
+];
+// ============================================================
+
+var mobIdx     = 0;
+var mobIframe  = document.getElementById('mobIntroIframe');
+var mobNum     = document.getElementById('mobIntroNum');
+var mobTitl    = document.getElementById('mobIntroTitle');
+var mobCounter = document.getElementById('mobIntroCounter');
+var mobDots    = document.getElementById('mobIntroDots');
+var mobPrev    = document.getElementById('mobIntroPrev');
+var mobNext    = document.getElementById('mobIntroNext');
+
+function buildMobDots() {
+  mobDots.innerHTML = '';
+  MOB_INTRO.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', function() { mobGoTo(i); });
+    mobDots.appendChild(d);
+  });
+}
+
+function mobGoTo(index) {
+  mobIframe.src = '';
+  mobIdx = index;
+  var v = MOB_INTRO[index];
+  mobIframe.src = 'https://www.youtube.com/embed/' + v.id + '?rel=0';
+  mobNum.textContent   = index === 0 ? 'LATEST' : 'VIDEO ' + String(MOB_INTRO.length - index).padStart(2, '0');
+  mobTitl.textContent  = v.title;
+  mobCounter.textContent = (index + 1) + ' / ' + MOB_INTRO.length;
+  mobDots.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === index);
+  });
+  mobPrev.style.opacity       = index === 0 ? '0.25' : '1';
+  mobPrev.style.pointerEvents = index === 0 ? 'none' : 'auto';
+  mobNext.style.opacity       = index === MOB_INTRO.length - 1 ? '0.25' : '1';
+  mobNext.style.pointerEvents = index === MOB_INTRO.length - 1 ? 'none' : 'auto';
+}
+
+mobPrev.addEventListener('click', function() { if (mobIdx > 0) mobGoTo(mobIdx - 1); });
+mobNext.addEventListener('click', function() { if (mobIdx < MOB_INTRO.length - 1) mobGoTo(mobIdx + 1); });
+
+// Swipe support
+var mobTouchX = 0;
+document.getElementById('mobIntroWrapper').addEventListener('touchstart', function(e) {
+  mobTouchX = e.changedTouches[0].clientX;
+}, { passive: true });
+document.getElementById('mobIntroWrapper').addEventListener('touchend', function(e) {
+  var diff = mobTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) {
+    if (diff > 0 && mobIdx < MOB_INTRO.length - 1) mobGoTo(mobIdx + 1);
+    if (diff < 0 && mobIdx > 0) mobGoTo(mobIdx - 1);
+  }
+}, { passive: true });
+
+// Only init if on mobile
+if (window.innerWidth <= 768) {
+  buildMobDots();
+  mobGoTo(0);
+}
+window.addEventListener('resize', function() {
+  if (window.innerWidth <= 768 && mobDots.children.length === 0) {
+    buildMobDots();
+    mobGoTo(0);
+  }
+});
+</script>
 
 <section class="full-section dark">
   <div class="full-section-inner">
